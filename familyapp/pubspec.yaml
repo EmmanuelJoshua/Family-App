@@ -14,7 +14,7 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:
@@ -45,6 +45,15 @@ flutter:
   assets:
   - assets/images/food_salad.jpg
   - assets/images/family.jpg
+  - assets/images/baby.jpg
+  - assets/images/baby2.jpg
+  - assets/images/chicken.jpg
+  - assets/images/fries.jpg
+  - assets/images/gamepad.jpg
+  - assets/images/healthy_breakfast.jpg
+  - assets/images/money.jpg
+  - assets/images/pizza.jpg
+  - assets/images/vegan.jpg
 
   fonts:
   - family: PTsans
