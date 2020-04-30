@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:sticky_headers/sticky_headers/widget.dart';
 
@@ -10,6 +12,14 @@ class LovedOffers extends StatefulWidget {
 
 class _LovedOffersState extends State<LovedOffers> {
   final List<String> categories = ['Freebies', 'Offers', 'Contests', 'Others'];
+
+  final List<String> offers = ['Vegan Fries', 'PS3 Gamepad', 'Vegan Pizza', '\$100 Cash'];
+  final List<String> offersFamily = ['James\'s Family', 'Isaac\'s Son', 'Brian\'s Family', 'Morgan\'s Baby'];
+  final List<IconData> offersIcons = [
+    Icons.fastfood,
+    Icons.gamepad,
+    Icons.fastfood,
+    Icons.attach_money];
 
   int selectedindex = 0;
 
@@ -28,7 +38,7 @@ class _LovedOffersState extends State<LovedOffers> {
                     itemCount: categories.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
-                        padding: EdgeInsets.only(left: 6, bottom: 6),
+                        padding: EdgeInsets.only(left: 6, bottom: 8),
                         child: SizedBox(
                           width: 82,
                           child: FlatButton(
@@ -65,7 +75,7 @@ class _LovedOffersState extends State<LovedOffers> {
                       itemCount: 4,
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
-                          margin: EdgeInsets.only(left: 15, right: 15, bottom: 6, top: 8),
+                          margin: EdgeInsets.only(left: 18, right: 18, bottom: 6, top: 8),
                           decoration: BoxDecoration(
                             color: Color(0xFFF9F9FA),
                             borderRadius: BorderRadius.circular(15.0),
@@ -74,18 +84,18 @@ class _LovedOffersState extends State<LovedOffers> {
                             leading: CircleAvatar(
                               backgroundColor: Color(0xFFD9FBFD),
                               child: Icon(
-                                Icons.gamepad,
+                                offersIcons[index],
                                 color: buttonColor,
                                 size: 18,
                               ),
                             ),
-                            title: Text('PS3 Gamepad',
+                            title: Text(offers[index],
                                 style: TextStyle(
                                     fontFamily: 'PTSans',
                                     fontSize: 14,
                                     color: primaryText,
                                     fontWeight: FontWeight.w600)),
-                            subtitle: Text('James\'s Family',
+                            subtitle: Text(offersFamily[index],
                                 style: TextStyle(
                                     fontFamily: 'PTSans',
                                     fontSize: 13,

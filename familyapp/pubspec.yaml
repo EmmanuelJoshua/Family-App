@@ -54,6 +54,16 @@ flutter:
   - assets/images/money.jpg
   - assets/images/pizza.jpg
   - assets/images/vegan.jpg
+  - assets/images/developer.jpg
+  - assets/images/facebook.png
+  - assets/images/twitter.png
+  - assets/images/linkedin.png
+  - assets/images/google.png
+  - assets/images/airbnb.png
+  - assets/images/pinterest.png
+  - assets/images/envelope.png
+  - assets/images/thumbs.png
+  - assets/images/user.png
 
   fonts:
   - family: PTsans

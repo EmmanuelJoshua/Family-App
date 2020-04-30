@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:familyapp/theme.dart';
 
+import 'aboutpage.dart';
 import 'homepage.dart';
 import 'lovedoffers.dart';
 
@@ -12,9 +13,9 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   int bottomIndex = 0;
 
-  final List<String> headerCategories = ['Discover', 'Favorite Families', 'Loved Offers', 'About', 'Account'];
+  final List<String> headerCategories = ['Discover', 'Favorite Families', 'Loved Offers', '', 'Account'];
 
-  final List<Widget> children = [HomePage(), Container(), LovedOffers(), Container(), Container()];
+  final List<Widget> children = [HomePage(), Container(), LovedOffers(), AboutDeveloper(), Container()];
 
   final List<Widget> headerIcons = [
     Padding(
@@ -57,7 +58,7 @@ class _LandingPageState extends State<LandingPage> {
               style: headlines,
             ),
           ),
-          backgroundColor: primaryColor,
+          backgroundColor: bottomIndex == 3 ? Color(0xFF1D2427) : primaryColor,
           elevation: 0.0,
           actions: <Widget>[
             headerIcons[bottomIndex]

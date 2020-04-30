@@ -21,6 +21,8 @@ class _HomePageState extends State<HomePage> {
 
   final List<String> categories = ['Freebies', 'Offers', 'Contests', 'Others'];
 
+  final List<bool> familyFollowed = [false, false, false];
+
   final List<String> imagesSpecial = [
     'assets/images/food_salad.jpg',
     'assets/images/chicken.jpg',
@@ -37,6 +39,11 @@ class _HomePageState extends State<HomePage> {
     'assets/images/family.jpg',
     'assets/images/baby2.jpg',
   ];
+
+  void followFamily(int index){
+    if(familyFollowed[index] == false) familyFollowed[index] = true;
+    else if(familyFollowed[index] == true) familyFollowed[index] = false;
+  }
 
   @override
   void initState() {
@@ -285,19 +292,27 @@ class _HomePageState extends State<HomePage> {
                         BorderRadius.vertical(bottom: Radius.circular(10))),
                 clipBehavior: Clip.antiAlias,
                 child: GridTileBar(
-                  backgroundColor: Colors.black54,
-                  leading: OutlineButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Follow',
-                      style: TextStyle(fontFamily: 'PTSans'),
+                  backgroundColor: Colors.black38,
+                  leading: Padding(
+                    padding: const EdgeInsets.only(top: 8, bottom: 8),
+                    child: FlatButton(
+                      onPressed: () {
+                        setState(() {
+                          followFamily(index);
+                        });
+                      },
+                      child: Text(
+                        familyFollowed[index] ? 'Unfollow' : 'Follow',
+                        style: TextStyle(fontFamily: 'PTSans', color: Colors.white70),
+                      ),
+                      color: Colors.white38,
+//                    borderSide: BorderSide(color: Colors.white, width: 0.9),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
                     ),
-                    borderSide: BorderSide(color: Colors.white, width: 0.9),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
                   ),
                   title: Container(),
-                  trailing: Icon(Icons.star_border),
+                  trailing: Icon( familyFollowed[index] ? Icons.star : Icons.star_border, color: Colors.white70,),
                 ),
               ),
               child: ClipRRect(
