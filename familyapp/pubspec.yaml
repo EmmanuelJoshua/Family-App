@@ -64,6 +64,7 @@ flutter:
   - assets/images/envelope.png
   - assets/images/thumbs.png
   - assets/images/user.png
+  - assets/images/signs.png
 
   fonts:
   - family: PTsans

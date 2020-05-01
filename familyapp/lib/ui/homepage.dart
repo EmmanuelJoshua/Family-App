@@ -11,18 +11,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  //Declaration of the top selection index
   int selectedindex = 0;
+  //Declaration of the page index
   int pageIndex = 1;
 
+  //Declaration of the two page controllers
   PageController _pageController;
   PageController _pageController2;
 
+  //Declaration of top selection Button Color
   Color buttonColor = categoriesColor[0];
 
+  //Declaration of the top selection list
   final List<String> categories = ['Freebies', 'Offers', 'Contests', 'Others'];
 
+  //Declaration of boolean values for the family followed feature
   final List<bool> familyFollowed = [false, false, false];
 
+  //Declaration of the images list for the special offers
   final List<String> imagesSpecial = [
     'assets/images/food_salad.jpg',
     'assets/images/chicken.jpg',
@@ -34,17 +41,20 @@ class _HomePageState extends State<HomePage> {
     'assets/images/vegan.jpg',
   ];
 
+  //Declaration of the images list for the featured families
   final List<String> imagesFamily = [
     'assets/images/baby.jpg',
     'assets/images/family.jpg',
     'assets/images/baby2.jpg',
   ];
 
+  //implementation of the follow family feature
   void followFamily(int index){
     if(familyFollowed[index] == false) familyFollowed[index] = true;
     else if(familyFollowed[index] == true) familyFollowed[index] = false;
   }
 
+  //Initialization of the Page Controllers
   @override
   void initState() {
     super.initState();
@@ -53,6 +63,7 @@ class _HomePageState extends State<HomePage> {
     _pageController2 = PageController(initialPage: 1, viewportFraction: 0.6);
   }
 
+  //Generation of a random number
   int _number = 0;
   void generateRandom() {
     final _random = new Random();
@@ -64,12 +75,18 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    //Single Child Scrollview
     return SingleChildScrollView(
+
+      //Sticky Header implementation
       child: StickyHeader(
+        //Main header, cant be scrolled on
         header: Container(
           color: Colors.white,
           height: 56,
           padding: EdgeInsets.only(left: 6, bottom: 6),
+
+          //Listview builder for the top selection buttons
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: categories.length,
@@ -103,8 +120,12 @@ class _HomePageState extends State<HomePage> {
                 );
               }),
         ),
+
+        //Main Content
         content: Column(
           children: <Widget>[
+
+            //Container for the first pageview / special offers
             Container(
               height: 250,
               width: double.infinity,
@@ -118,6 +139,8 @@ class _HomePageState extends State<HomePage> {
                   debugPrint('$index');
                 },
                 itemBuilder: (BuildContext context, int index) {
+
+                  //the special offers card selector
                   return _cardSelector(index, _number);
                 },
               ),
@@ -125,6 +148,8 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: EdgeInsets.all(5),
             ),
+
+            //Featured heading
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -160,6 +185,8 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: EdgeInsets.all(5),
             ),
+
+            //Container for the second pageview / featured family
             Container(
               height: 220,
               width: double.infinity,
@@ -168,6 +195,8 @@ class _HomePageState extends State<HomePage> {
                 itemCount: 3,
                 onPageChanged: (int index) {},
                 itemBuilder: (BuildContext context, int index) {
+
+                  //the featured family card selector
                   return _familySelector(index);
                 },
               ),
@@ -178,15 +207,20 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  //The special offers card selector implementation
   _cardSelector(int index, int imageIn) {
     return AnimatedBuilder(
       animation: _pageController,
       builder: (BuildContext context, Widget widget) {
+
+        //reduced size of non selected card logic
         double value = 1;
         if (_pageController.position.haveDimensions) {
           value = _pageController.page - index;
           value = (1 - (value.abs() * 0.62) + 0.09).clamp(0.0, 1.0);
         }
+
+        //Logic for animation
         return Center(
           child: SizedBox(
             height: Curves.easeInOut.transform(value) * 270,
@@ -195,8 +229,12 @@ class _HomePageState extends State<HomePage> {
           ),
         );
       },
+
+      //Main special offers widgets
       child: Stack(
         children: <Widget>[
+
+          //Main image parent
           Center(
               child: Container(
             decoration: BoxDecoration(boxShadow: [
@@ -205,6 +243,8 @@ class _HomePageState extends State<HomePage> {
                   blurRadius: 10.0,
                   offset: Offset(4.0, 3.0))
             ]),
+
+            //Image implementation
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
               child: Image.asset(
@@ -215,6 +255,8 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           )),
+
+          //Floating Action Button Implementation
           pageIndex == index
               ? Positioned(
                   right: 1,
@@ -232,6 +274,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                 )
               : Container(),
+
+          //Bottom Text Implementation
           pageIndex == index
               ? Positioned(
                   bottom: 1,
@@ -257,15 +301,19 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  //The featured family card selector implementation
   _familySelector(int index) {
     return AnimatedBuilder(
       animation: _pageController2,
       builder: (BuildContext context, Widget widget) {
+
+        //reduced size of non selected card logic
         double value = 1;
         if (_pageController2.position.haveDimensions) {
           value = _pageController2.page - index;
           value = (1 - (value.abs() * 0.51) + 0.06).clamp(0.0, 1.0);
         }
+        //Animation logic
         return Center(
           child: SizedBox(
             height: Curves.easeInOut.transform(value) * 280,
@@ -274,8 +322,11 @@ class _HomePageState extends State<HomePage> {
           ),
         );
       },
+
+      //Main featured family widget
       child: Stack(
         children: <Widget>[
+          //Container with box shadow
           Center(
               child: Container(
             decoration: BoxDecoration(boxShadow: [
@@ -284,9 +335,12 @@ class _HomePageState extends State<HomePage> {
                   blurRadius: 10.0,
                   offset: Offset(4.0, 3.0))
             ]),
+            //Gridtile Implementation
             child: GridTile(
               footer: Material(
                 color: Colors.transparent,
+
+                //Rounded corner implementation
                 shape: RoundedRectangleBorder(
                     borderRadius:
                         BorderRadius.vertical(bottom: Radius.circular(10))),
@@ -295,6 +349,7 @@ class _HomePageState extends State<HomePage> {
                   backgroundColor: Colors.black38,
                   leading: Padding(
                     padding: const EdgeInsets.only(top: 8, bottom: 8),
+                    //Follow button implemented with Flat button
                     child: FlatButton(
                       onPressed: () {
                         setState(() {
@@ -315,6 +370,8 @@ class _HomePageState extends State<HomePage> {
                   trailing: Icon( familyFollowed[index] ? Icons.star : Icons.star_border, color: Colors.white70,),
                 ),
               ),
+
+              //Family Image implementation
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.asset(

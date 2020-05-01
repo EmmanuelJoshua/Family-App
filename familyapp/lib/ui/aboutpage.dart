@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:sticky_headers/sticky_headers/widget.dart';
 
 import '../theme.dart';
 
@@ -11,8 +10,10 @@ class AboutDeveloper extends StatefulWidget {
 }
 
 class _AboutDeveloperState extends State<AboutDeveloper> {
+  //Declaration of Tab Controller for the Experience and Review Tab
   TabController _tabController;
 
+  //Declaration of the Experiences with List type
   final List<String> experiences = [
     'Flutter Developer',
     'Lead Java Developer',
@@ -33,6 +34,7 @@ class _AboutDeveloperState extends State<AboutDeveloper> {
     'Jan 2016 - Mar 2017'
   ];
 
+  //Declaration of the Reviews with Map types
   final Map<String, Map<int, String>> reviews = {
     'reviewHeader': {
       0: 'Great mentor, thank you!',
@@ -50,13 +52,16 @@ class _AboutDeveloperState extends State<AboutDeveloper> {
 
   @override
   void initState() {
+    //Tab Controller initialization
     _tabController = new TabController(length: 2, vsync: ScaffoldState());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    //Single Child Scrollview
     return SingleChildScrollView(
+      //Makes the scrollview unscrollable
       physics: NeverScrollableScrollPhysics(),
       child: Column(
         children: <Widget>[
@@ -64,6 +69,7 @@ class _AboutDeveloperState extends State<AboutDeveloper> {
               color: Color(0xFF1D2427),
               child: Stack(
                 children: <Widget>[
+                  //Container Widget with the border radius at the top
                   Container(
                     margin: EdgeInsets.only(top: 70),
                     height: 246,
@@ -80,19 +86,16 @@ class _AboutDeveloperState extends State<AboutDeveloper> {
                               offset: Offset(-9.0, -9.0))
                         ]),
                   ),
+
+                  //Widget with the centered image and icons
                   Center(
                       child: Column(
                     children: <Widget>[
+                      //Container with the Image Widget
                       Container(
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.white, width: 3),
                           borderRadius: BorderRadius.circular(15),
-//                          boxShadow: [
-//                            BoxShadow(
-//                                color: Color(0xFF2B88A4),
-//                                blurRadius: 10.0,
-//                                offset: Offset(0.01,0.01))
-//                          ]
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15),
@@ -121,6 +124,8 @@ class _AboutDeveloperState extends State<AboutDeveloper> {
                       Padding(
                         padding: EdgeInsets.all(5),
                       ),
+
+                      //Widget with circled icons
                       SizedBox(
                         width: 240,
                         child: Row(
@@ -165,6 +170,8 @@ class _AboutDeveloperState extends State<AboutDeveloper> {
                       Padding(
                         padding: EdgeInsets.all(1),
                       ),
+
+                      //Tab Bar implementation
                       TabBar(
                         controller: _tabController,
                         unselectedLabelColor: Colors.black26,
@@ -180,87 +187,23 @@ class _AboutDeveloperState extends State<AboutDeveloper> {
                   )),
                 ],
               )),
+
+          //Container with the Tab Views
           Container(
             width: double.infinity,
             height: 300,
             child: TabBarView(
               controller: _tabController,
               children: [
+                //Experiences Widget
                 new ExperienceWidget(
                     experiencesIcons: experiencesIcons,
                     experiences: experiences,
                     experiencesCompany: experiencesCompany,
                     experiencesDate: experiencesDate),
-                Container(
-                  color: Colors.transparent,
-                  child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: 3,
-                      padding: EdgeInsets.only(top: 10, bottom: 20),
-                      itemBuilder: (BuildContext context, int index) {
 
-                        if (index.isOdd) return new Divider();
-                        
-                        final position = index ~/ 2;
-
-                        return Container(
-                            margin: EdgeInsets.only(
-                                left: 10, right: 10, bottom: 6, top: 8),
-                            decoration: BoxDecoration(
-                              color: Color(0xFFFFFFFF),
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  margin: EdgeInsets.only(left: 20, top: 10),
-                                  child: Text(reviews['reviewHeader'][position],
-                                      style: TextStyle(
-                                          fontFamily: 'PTSans',
-                                          fontSize: 16,
-                                          color: primaryText,
-                                          fontWeight: FontWeight.w600)),
-                                ),
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  margin: EdgeInsets.only(left: 20),
-                                  child: Text(reviews['reviewText'][position],
-                                      style: TextStyle(
-                                          fontFamily: 'PTSans',
-                                          fontSize: 16,
-                                          color: primaryText,
-                                          fontWeight: FontWeight.w400)),
-                                ),
-                                ListTile(
-                                  leading:  Image.asset(
-                                    'assets/images/user.png',
-                                    height: 43,
-                                    width: 43,
-                                  ),
-                                  title: Text(reviews['reviewer'][position],
-                                      style: TextStyle(
-                                          fontFamily: 'PTSans',
-                                          fontSize: 16,
-                                          color: primaryText,
-                                          fontWeight: FontWeight.w600)),
-                                  subtitle: Text(
-                                      reviews['reviewerCareer'][position],
-                                      style: TextStyle(
-                                          fontFamily: 'PTSans',
-                                          fontSize: 15,
-                                          color: Color(0xFF9FB0AE),
-                                          fontWeight: FontWeight.w600)),
-                                  trailing: Image.asset(
-                                    'assets/images/thumbs.png',
-                                    height: 35,
-                                    width: 35,
-                                  ),
-                                ),
-                              ],
-                            ));
-                      }),
-                )
+                //Reviews Widget
+                new ReviewsWidget(reviews: reviews)
               ],
             ),
           )
@@ -270,6 +213,96 @@ class _AboutDeveloperState extends State<AboutDeveloper> {
   }
 }
 
+//Reviews Widget Implementation
+class ReviewsWidget extends StatelessWidget {
+  const ReviewsWidget({
+    Key key,
+    @required this.reviews,
+  }) : super(key: key);
+
+  final Map<String, Map<int, String>> reviews;
+
+  @override
+  Widget build(BuildContext context) {
+    //Main Container
+    return Container(
+      color: Colors.transparent,
+
+      //Listview builder implementation
+      child: ListView.builder(
+          scrollDirection: Axis.vertical,
+          itemCount: 3,
+          padding: EdgeInsets.only(top: 10, bottom: 20),
+          itemBuilder: (BuildContext context, int index) {
+
+            if (index.isOdd) return new Divider();
+
+            final position = index ~/ 2;
+
+            //Main Review Container
+            return Container(
+                margin: EdgeInsets.only(
+                    left: 10, right: 10, bottom: 6, top: 8),
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      margin: EdgeInsets.only(left: 20, top: 10),
+                      child: Text(reviews['reviewHeader'][position],
+                          style: TextStyle(
+                              fontFamily: 'PTSans',
+                              fontSize: 16,
+                              color: primaryText,
+                              fontWeight: FontWeight.w600)),
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      margin: EdgeInsets.only(left: 20),
+                      child: Text(reviews['reviewText'][position],
+                          style: TextStyle(
+                              fontFamily: 'PTSans',
+                              fontSize: 16,
+                              color: primaryText,
+                              fontWeight: FontWeight.w400)),
+                    ),
+                    ListTile(
+                      leading:  Image.asset(
+                        'assets/images/user.png',
+                        height: 43,
+                        width: 43,
+                      ),
+                      title: Text(reviews['reviewer'][position],
+                          style: TextStyle(
+                              fontFamily: 'PTSans',
+                              fontSize: 16,
+                              color: primaryText,
+                              fontWeight: FontWeight.w600)),
+                      subtitle: Text(
+                          reviews['reviewerCareer'][position],
+                          style: TextStyle(
+                              fontFamily: 'PTSans',
+                              fontSize: 15,
+                              color: Color(0xFF9FB0AE),
+                              fontWeight: FontWeight.w600)),
+                      trailing: Image.asset(
+                        'assets/images/thumbs.png',
+                        height: 35,
+                        width: 35,
+                      ),
+                    ),
+                  ],
+                ));
+          }),
+    );
+  }
+}
+
+
+//Experience Widget Implementation
 class ExperienceWidget extends StatelessWidget {
   const ExperienceWidget({
     Key key,
@@ -286,8 +319,11 @@ class ExperienceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //Main Container
     return Container(
       color: Colors.transparent,
+
+      //Listview builder implementation
       child: ListView.builder(
           scrollDirection: Axis.vertical,
           itemCount: 3,
@@ -299,6 +335,8 @@ class ExperienceWidget extends StatelessWidget {
                 color: Color(0xFFFFFFFF),
                 borderRadius: BorderRadius.circular(15.0),
               ),
+
+              //Main ListTile
               child: ListTile(
                 leading: ClipRect(
                   clipper: CircleClipper(),
@@ -343,6 +381,8 @@ class ExperienceWidget extends StatelessWidget {
   }
 }
 
+
+//Custom Clipper to render the developer image as a circle
 class CircleClipper extends CustomClipper<Rect> {
   @override
   Rect getClip(Size size) {

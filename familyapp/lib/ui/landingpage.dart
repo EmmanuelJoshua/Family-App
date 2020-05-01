@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:familyapp/theme.dart';
 
 import 'aboutpage.dart';
+import 'accountpage.dart';
+import 'favoritefamilies.dart';
 import 'homepage.dart';
 import 'lovedoffers.dart';
 
@@ -11,11 +13,13 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
+  //Declaration of bottom nav index
   int bottomIndex = 0;
 
-  final List<String> headerCategories = ['Discover', 'Favorite Families', 'Loved Offers', '', 'Account'];
+  //Declaration of page headers, pages, and pages icon
+  final List<String> headerCategories = ['Discover', 'Favorite Families', 'Loved Offers', 'About', ''];
 
-  final List<Widget> children = [HomePage(), Container(), LovedOffers(), AboutDeveloper(), Container()];
+  final List<Widget> children = [HomePage(), FavoriteFamiles(), LovedOffers(), AboutApp() , AboutDeveloper()];
 
   final List<Widget> headerIcons = [
     Padding(
@@ -49,7 +53,9 @@ class _LandingPageState extends State<LandingPage> {
 
   @override
   Widget build(BuildContext context) {
+    //Main Scaffold
     return Scaffold(
+      //AppBar
         appBar: AppBar(
           title: Padding(
             padding: const EdgeInsets.only(left: 6),
@@ -58,12 +64,13 @@ class _LandingPageState extends State<LandingPage> {
               style: headlines,
             ),
           ),
-          backgroundColor: bottomIndex == 3 ? Color(0xFF1D2427) : primaryColor,
+          backgroundColor: bottomIndex == 4 ? Color(0xFF1D2427) : primaryColor,
           elevation: 0.0,
           actions: <Widget>[
             headerIcons[bottomIndex]
           ],
         ),
+        //Bottom Navigation
         bottomNavigationBar: BottomNavigationBar(
 //          elevation: 2,
             selectedItemColor: primaryText,
@@ -88,6 +95,8 @@ class _LandingPageState extends State<LandingPage> {
                   icon: Icon(Icons.person), title: Text('')),
             ]),
         backgroundColor: primaryColor,
+
+        //Different Pages
         body: children[bottomIndex]
     );
   }
